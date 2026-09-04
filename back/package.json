@@ -1,0 +1,16 @@
+{
+  "name": "plataforma-educacional-back-v1",
+  "version": "1.0.0",
+  "description": "MVP do backend da plataforma educacional",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
