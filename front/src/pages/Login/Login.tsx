@@ -1,22 +1,56 @@
-import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import "../Register/Register.css";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
 
 function Login() {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError("");
+    setIsLoading(true);
 
-    navigate("/dashboard");
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") || "");
+    const password = String(formData.get("password") || "");
+
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Não foi possível fazer login.");
+      }
+
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("authUser", JSON.stringify(data.user));
+      navigate("/dashboard");
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Não foi possível fazer login.");
+    } finally {
+      setIsLoading(false);
+    }
+
   };
 
   return (
     <main className="login-page">
+      <header className="auth-header">
+        <Link to="/" className="auth-brand">CCDD <span>Ensino</span></Link>
+      </header>
       <section className="login-card">
-        <h1>CCDD - Ensino</h1>
-
         <div className="login-header">
-          <h2>Bem vindo!</h2>
+          <p className="auth-eyebrow">Área do professor</p>
+          <h1>Bem-vindo de volta.</h1>
+          <p>Entre para gerenciar suas videoaulas e materiais.</p>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -50,15 +84,17 @@ function Login() {
               Lembrar e-mail
             </label>
 
-            <a href="/forgot-password">Esqueceu sua senha?</a>
           </div>
 
-          <button type="submit">Acessar</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Entrando..." : "Acessar"}
+          </button>
+          {error && <p role="alert" className="login-error">{error}</p>}
         </form>
 
         <p className="register-link">
           Não tem uma conta?{" "}
-          <a href="/register">Cadastrar</a>
+          <Link to="/register">Criar conta de professor</Link>
         </p>
       </section>
     </main>
