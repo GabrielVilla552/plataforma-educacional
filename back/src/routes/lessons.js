@@ -19,6 +19,17 @@ lessonsRouter.get('/', (req, res) => {
   res.json({ items: results.map(expand), total: results.length });
 });
 
+lessonsRouter.get('/mine', authRequired, (req, res) => {
+  const results = db.lessons.filter(lesson => lesson.professorId === req.user.id);
+  res.json({ items: results.map(expand), total: results.length });
+});
+
+lessonsRouter.get('/mine/:id', authRequired, (req, res) => {
+  const lesson = db.lessons.find(item => item.id === req.params.id && item.professorId === req.user.id);
+  if (!lesson) return res.status(404).json({ error: 'NOT_FOUND', message: 'Videoaula não encontrada.' });
+  res.json(expand(lesson));
+});
+
 lessonsRouter.get('/:id', (req, res) => {
   const lesson = db.lessons.find(x => x.id === req.params.id && x.status === 'PUBLISHED');
   if (!lesson) return res.status(404).json({ error: 'NOT_FOUND', message: 'Videoaula não encontrada.' });
