@@ -1,0 +1,158 @@
+.lesson-page {
+  min-height: 100vh;
+  padding: 40px;
+  background: #f5f7fb;
+}
+
+.lesson-header {
+  max-width: 900px;
+  margin: 0 auto 30px;
+}
+
+.lesson-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #111827;
+  border-radius: 12px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.lesson-label {
+  margin: 0 0 8px;
+  color: #4f46e5;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lesson-header h1 {
+  margin: 0;
+  color: #111827;
+  font-size: 36px;
+}
+
+.video-container {
+  max-width: 900px;
+  margin: 0 auto 30px;
+}
+
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  background: #111827;
+  border-radius: 12px;
+  color: white;
+}
+
+.video-placeholder p {
+  margin-top: 15px;
+  color: #d1d5db;
+}
+
+.play-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #4f46e5;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.lesson-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 30px;
+
+  background: white;
+  border-radius: 12px;
+}
+
+.lesson-info {
+  flex: 1;
+}
+
+.lesson-info h2 {
+  margin: 0 0 12px;
+  color: #111827;
+}
+
+.lesson-info p {
+  margin: 0 0 15px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.lesson-duration {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.complete-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+
+  background: #4f46e5;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.complete-button:hover {
+  background: #4338ca;
+}
+
+.lesson-navigation {
+  display: flex;
+  justify-content: space-between;
+
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.navigation-button {
+  padding: 12px 18px;
+  border-radius: 8px;
+
+  color: #374151;
+  background: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navigation-button:hover {
+  background: #e5e7eb;
+}
+
+.navigation-button.next {
+  background: #4f46e5;
+  color: white;
+}
+
+.navigation-button.next:hover {
+  background: #4338ca;
+}
