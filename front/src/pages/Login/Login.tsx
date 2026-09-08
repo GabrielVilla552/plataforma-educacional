@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
+    const navigate = useNavigate();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log("Login submitted");
+    navigate("/dashboard");
   };
 
   return (
@@ -24,7 +27,7 @@ function Login() {
               id="email"
               name="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder="Seu email"
               required
             />
           </div>
@@ -36,7 +39,7 @@ function Login() {
               id="password"
               name="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Sua senha"
               required
             />
           </div>
