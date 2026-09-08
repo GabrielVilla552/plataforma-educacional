@@ -5,7 +5,7 @@ const courses = [
     id: 1,
     title: "Programação de Computadores I",
     description: "Aprenda os básicos de programação para qualquer linguagem.",
-    progress: 100,
+    progress: 70,
   },
   {
     id: 2,
