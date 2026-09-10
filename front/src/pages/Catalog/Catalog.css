@@ -1,0 +1,392 @@
+.catalog-page {
+  min-height: 100vh;
+  color: #17221d;
+  background: #f4f1e8;
+}
+
+.catalog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+.brand {
+  color: #17221d;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-decoration: none;
+}
+
+.brand span {
+  color: #b34d35;
+  font-weight: 500;
+}
+
+.header-link,
+.header-button {
+  color: #17221d;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.header-button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: #17221d;
+  color: #f4f1e8;
+}
+
+.professor-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logout-button {
+  padding: 10px 2px;
+  border: 0;
+  background: transparent;
+  color: #17221d;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  color: #b34d35;
+}
+
+.login-menu {
+  position: relative;
+}
+
+.login-menu summary {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 2px;
+  color: #17221d;
+  line-height: 1.2;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.login-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.login-menu summary span {
+  display: inline-block;
+  padding-bottom: 10px;
+  color: #b34d35;
+  transition: transform .2s ease;
+}
+
+.login-menu[open] summary span {
+  padding-bottom: 10px;
+  transform: rotate(180deg);
+}
+
+.login-menu-options {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 2;
+  display: grid;
+  min-width: 180px;
+  padding: 6px;
+  border: 1px solid #d8d2c2;
+  background: #fffdf7;
+  box-shadow: 0 12px 24px rgb(23 34 29 / 12%);
+}
+
+.login-menu-options a,
+.login-menu-options button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  background: transparent;
+  color: #17221d;
+  font: inherit;
+  font-size: .9rem;
+  text-align: left;
+  text-decoration: none;
+}
+
+.login-menu-options a:hover {
+  background: #ebe5d7;
+}
+
+.login-menu-options button:disabled {
+  color: #a7a59d;
+  cursor: not-allowed;
+}
+
+.login-menu-options button span {
+  color: #b34d35;
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.catalog-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, .8fr);
+  align-items: end;
+  gap: 64px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 84px 32px 72px;
+  border-top: 1px solid #d8d2c2;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: #b34d35;
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.catalog-hero h1 {
+  max-width: 680px;
+  margin: 0;
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: .95;
+  letter-spacing: -.04em;
+}
+
+.hero-copy {
+  max-width: 520px;
+  margin: 28px 0 0;
+  color: #58635c;
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.search-form {
+  padding: 22px;
+  border: 1px solid #d8d2c2;
+  background: #ebe5d7;
+}
+
+.search-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.search-control {
+  display: flex;
+  gap: 8px;
+}
+
+.search-control input {
+  min-width: 0;
+  flex: 1;
+  padding: 13px 12px;
+  border: 1px solid #c9c1b0;
+  border-radius: 4px;
+  background: #fffdf7;
+  color: #17221d;
+  font: inherit;
+}
+
+.search-hint {
+  display: block;
+  margin-top: 10px;
+  color: #68736b;
+  font-size: .78rem;
+}
+
+.discipline-section,
+.lesson-section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px 72px;
+}
+
+.lesson-section {
+  padding-bottom: 96px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -.03em;
+}
+
+.section-heading > span {
+  color: #68736b;
+  font-size: .9rem;
+}
+
+.discipline-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #d8d2c2;
+}
+
+.discipline-list button {
+  padding: 10px 14px;
+  border: 1px solid #c9c1b0;
+  border-radius: 999px;
+  background: transparent;
+  color: #58635c;
+  font: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.discipline-list button:hover,
+.discipline-list button.active {
+  border-color: #17221d;
+  background: #17221d;
+  color: #f4f1e8;
+}
+
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.catalog-card {
+  overflow: hidden;
+  border: 1px solid #d8d2c2;
+  background: #fffdf7;
+}
+
+.card-accent {
+  display: flex;
+  align-items: end;
+  height: 126px;
+  padding: 16px;
+  background: #263d35;
+  color: #e7d9b8;
+}
+
+.card-accent span {
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.catalog-card:nth-child(2n) .card-accent { background: #b34d35; }
+.catalog-card:nth-child(3n) .card-accent { background: #687b57; }
+
+.card-body {
+  padding: 22px;
+}
+
+.card-meta {
+  color: #b34d35;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.card-body h3 {
+  margin: 12px 0 10px;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.card-body p {
+  min-height: 52px;
+  margin: 0 0 22px;
+  color: #68736b;
+  line-height: 1.5;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e5dfd1;
+  color: #68736b;
+  font-size: .82rem;
+}
+
+.card-footer a {
+  color: #17221d;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.catalog-message {
+  color: #68736b;
+}
+
+@media (max-width: 800px) {
+  .catalog-header,
+  .catalog-hero,
+  .discipline-section,
+  .lesson-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .catalog-hero {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding-top: 56px;
+  }
+
+  .lesson-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .catalog-header {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .header-button {
+    padding: 8px 10px;
+    font-size: .82rem;
+  }
+
+  .catalog-hero h1 {
+    font-size: 3.4rem;
+  }
+
+  .search-control {
+    flex-direction: column;
+  }
+
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .lesson-grid {
+    grid-template-columns: 1fr;
+  }
+}
