@@ -1,13 +1,48 @@
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { apiFetch } from "../../utils/api";
+
+interface User {
+  area: string;
+  createdAt: string;
+  email: string;
+  id: string;
+  institution: string;
+  name: string;
+  role: string;
+}
+
+interface LoginResponse {
+  expiresAt: string;
+  token: string;
+  tokenType: string;
+  user: User;
+}
 
 function Login() {
   const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    navigate("/dashboard");
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const body =  {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    }
+
+    const data: LoginResponse = await apiFetch("/auth/login", {
+      method: "POST",
+      body
+    });
+
+    if (data?.token){
+      localStorage.setItem("loginResponse", JSON.stringify(data))
+      console.log("Logado:", data.user.email)
+      navigate("/dashboard");
+    }
   };
 
   return (
