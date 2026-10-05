@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
-import type { LessonItems, LoginResponse } from "../../types";
+import { getLogin } from "../../utils/auth";
+import type { LessonItems } from "../../types";
 import "./Dashboard.css";
 import ProfessorDashboard from "../../components/Dashboard/ProfessorDashboard";
 import StudentDashboard from "../../components/Dashboard/StudentDashboard";
-
-function getLogin(): LoginResponse | null {
-  try {
-    return JSON.parse(localStorage.getItem("loginResponse") ?? "null");
-  } catch {
-    return null;
-  }
-}
 
 function Dashboard() {
   const [lessons, setLessons] = useState<LessonItems | null>(null);
@@ -20,11 +13,13 @@ function Dashboard() {
   const [error, setError] = useState<string | null>(null);
 
   const login = getLogin();
+  const isProfessor = login?.user.role === "PROFESSOR";
 
   useEffect(() => {
     let cancelled = false;
 
-    apiFetch<LessonItems>("/lessons/")
+    // Professor vê todas as suas aulas (inclusive rascunhos); aluno vê só as publicadas
+    apiFetch<LessonItems>(isProfessor ? "/lessons/mine" : "/lessons/")
       .then((data) => {
         if (!cancelled) setLessons(data);
       })
@@ -38,13 +33,11 @@ function Dashboard() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [isProfessor]);
 
   if (!login) return <Navigate to="/login" replace />;
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>{error}</p>;
-
-  const isProfessor = login.user.role === "PROFESSOR";
 
   return (
     <main className="dashboard">
@@ -60,7 +53,15 @@ function Dashboard() {
       </header>
 
       <section className="courses">
-        <h2>{isProfessor ? "Minhas Aulas" : "Meus Cursos"}</h2>
+        <div className="courses-header">
+          <h2>{isProfessor ? "Minhas Aulas" : "Meus Cursos"}</h2>
+
+          {isProfessor && (
+            <Link to="/lessons/new" className="new-lesson-button">
+              + Nova videoaula
+            </Link>
+          )}
+        </div>
 
         <div className="course-grid">
           {isProfessor ? (
