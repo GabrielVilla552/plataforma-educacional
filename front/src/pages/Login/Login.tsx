@@ -1,23 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { apiFetch } from "../../utils/api";
-
-interface User {
-  area: string;
-  createdAt: string;
-  email: string;
-  id: string;
-  institution: string;
-  name: string;
-  role: string;
-}
-
-interface LoginResponse {
-  expiresAt: string;
-  token: string;
-  tokenType: string;
-  user: User;
-}
+import type { LoginResponse } from "../../types";
 
 function Login() {
   const navigate = useNavigate();
