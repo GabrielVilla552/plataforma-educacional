@@ -1,27 +1,56 @@
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { apiFetch } from "../../utils/api";
+import type { LessonItems, LoginResponse } from "../../types";
 import "./Dashboard.css";
+import ProfessorDashboard from "../../components/Dashboard/ProfessorDashboard";
+import StudentDashboard from "../../components/Dashboard/StudentDashboard";
 
-const courses = [
-  {
-    id: 1,
-    title: "Programação de Computadores I",
-    description: "Aprenda os básicos de programação para qualquer linguagem.",
-    progress: 70,
-  },
-  {
-    id: 2,
-    title: "GPMS",
-    description: "Aprenda a planejar e gerir projetos de Software.",
-    progress: 40,
-  },
-];
+function getLogin(): LoginResponse | null {
+  try {
+    return JSON.parse(localStorage.getItem("loginResponse") ?? "null");
+  } catch {
+    return null;
+  }
+}
 
 function Dashboard() {
+  const [lessons, setLessons] = useState<LessonItems | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const login = getLogin();
+
+  useEffect(() => {
+    let cancelled = false;
+
+    apiFetch<LessonItems>("/lessons/")
+      .then((data) => {
+        if (!cancelled) setLessons(data);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err.message ?? "Erro ao carregar as lições");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!login) return <Navigate to="/login" replace />;
+  if (loading) return <p>Carregando...</p>;
+  if (error) return <p>{error}</p>;
+
+  const isProfessor = login.user.role === "PROFESSOR";
+
   return (
     <main className="dashboard">
       <header className="dashboard-header">
         <div>
-          <h1>Bem vindo(a) <i>Usuário</i></h1>
-          <p>Continue com seu aprendizado.</p>
+          <h1>Bem vindo(a), <i>{login.user.name}</i></h1>
         </div>
 
         <nav>
@@ -31,35 +60,14 @@ function Dashboard() {
       </header>
 
       <section className="courses">
-        <h2>Meus Cursos</h2>
+        <h2>{isProfessor ? "Minhas Aulas" : "Meus Cursos"}</h2>
 
         <div className="course-grid">
-          {courses.map((course) => (
-            <article className="course-card" key={course.id}>
-              <div className="course-image">
-                Course Image
-              </div>
-
-              <div className="course-content">
-                <h3>{course.title}</h3>
-
-                <p>{course.description}</p>
-
-                <div className="progress">
-                  <div
-                    className="progress-bar"
-                    style={{ width: `${course.progress}%` }}
-                  />
-                </div>
-
-                <span>{course.progress}% completo</span>
-
-                <a href={`/courses/${course.id}`}>
-                  Continuar →
-                </a>
-              </div>
-            </article>
-          ))}
+          {isProfessor ? (
+            <ProfessorDashboard lessons={lessons} />
+          ) : (
+            <StudentDashboard lessons={lessons} />
+          )}
         </div>
       </section>
     </main>
