@@ -1,17 +1,17 @@
 import { db } from './db.js';
+import { config } from './config.js';
+import { verifyJwt } from './jwt.js';
 
-export function authRequired(req, res, next) {
-  const value = req.headers.authorization || '';
-  const token = value.startsWith('Bearer ') ? value.slice(7) : null;
-  const session = token ? db.sessions.get(token) : null;
-  if (!session || session.expiresAt <= Date.now()) {
-    if (token) db.sessions.delete(token);
+export async function authRequired(req, res, next) {
+  const match = /^Bearer\s+(\S+)$/i.exec(req.headers.authorization || '');
+  const tokenClaims = match ? await verifyJwt(match[1], config.jwtSecret) : null;
+  if (!tokenClaims || db.revokedTokens.has(tokenClaims.jti)) {
     return res.status(401).json({ error: 'UNAUTHORIZED', message: 'Token ausente ou inválido.' });
   }
-  const user = db.users.find(item => item.id === session.userId);
+  const user = db.users.find(item => item.id === tokenClaims.sub);
   if (!user) return res.status(401).json({ error: 'UNAUTHORIZED', message: 'Usuário não encontrado.' });
   req.user = user;
-  req.token = token;
+  req.tokenClaims = tokenClaims;
   next();
 }
 

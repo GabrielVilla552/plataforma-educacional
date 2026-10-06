@@ -89,5 +89,5 @@ export const db = {
     id: newId(), lessonId, title: 'Lista de exercícios',
     type: 'PDF', url: 'https://example.org/lista.pdf'
   }],
-  sessions: new Map()
+  revokedTokens: new Map()
 };

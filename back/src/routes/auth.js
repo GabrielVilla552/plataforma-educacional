@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import crypto from 'node:crypto';
 import { db } from '../db.js';
 import { config } from '../config.js';
 import { authRequired } from '../middleware.js';
 import { hashPassword, verifyPassword, newId, publicUser } from '../utils.js';
+import { signJwt } from '../jwt.js';
 
 export const authRouter = Router();
 
@@ -21,16 +21,20 @@ authRouter.post('/register', (req, res) => {
   res.status(201).json(publicUser(user));
 });
 
-authRouter.post('/login', (req, res) => {
+authRouter.post('/login', async (req, res) => {
   const email = emailOf(req.body?.email);
   const user = db.users.find(item => item.email === email);
   if (!user || !verifyPassword(String(req.body?.password || ''), user.passwordHash))
     return res.status(401).json({ error: 'INVALID_CREDENTIALS', message: 'E-mail ou senha inválidos.' });
-  const token = crypto.randomBytes(32).toString('hex');
-  const expiresAt = Date.now() + config.tokenTtlSeconds * 1000;
-  db.sessions.set(token, { userId: user.id, expiresAt });
+  const { token, expiresAt } = await signJwt(user.id, config.jwtSecret, config.tokenTtlSeconds);
+  for (const [tokenId, expiry] of db.revokedTokens) {
+    if (expiry <= Date.now() / 1000) db.revokedTokens.delete(tokenId);
+  }
   res.json({ token, tokenType: 'Bearer', expiresAt: new Date(expiresAt).toISOString(), user: publicUser(user) });
 });
 
 authRouter.get('/me', authRequired, (req, res) => res.json(publicUser(req.user)));
-authRouter.post('/logout', authRequired, (req, res) => { db.sessions.delete(req.token); res.status(204).end(); });
+authRouter.post('/logout', authRequired, (req, res) => {
+  db.revokedTokens.set(req.tokenClaims.jti, req.tokenClaims.exp);
+  res.status(204).end();
+});

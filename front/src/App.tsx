@@ -5,6 +5,7 @@ import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Course from "./pages/Course/Course";
 import Lesson from "./pages/Lesson/Lesson";
+import ManageLesson from "./pages/ManageLesson/ManageLesson";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/courses/:courseId" element={<Course />} />
         <Route path="/courses/:courseId/lessons/:lessonId" element={<Lesson />} />
+        <Route path="/lessons/new" element={<ManageLesson />} />
+        <Route path="/lessons/:lessonId/manage" element={<ManageLesson />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
