@@ -47,8 +47,8 @@ function Dashboard() {
         </div>
 
         <nav>
-          <a href="/dashboard">Dashboard</a>
-          <a href="/profile">Perfil</a>
+          <Link to="/">Catálogo</Link>
+          <button type="button" onClick={() => void handleLogout(navigate, "/")}>Sair</button>
         </nav>
       </header>
 
@@ -70,6 +70,7 @@ function Dashboard() {
             <StudentDashboard lessons={lessons} />
           )}
         </div>
+        {!error && lessons.length === 0 && <p>Você ainda não cadastrou nenhuma videoaula.</p>}
       </section>
     </main>
   );
