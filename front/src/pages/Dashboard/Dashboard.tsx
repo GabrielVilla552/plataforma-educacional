@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { handleLogout } from "../../utils/auth";
 import { getLessonStatusLabel } from "../../utils/lessonStatus";
 import "./Dashboard.css";
-import ProfessorDashboard from "../../components/Dashboard/ProfessorDashboard";
-import StudentDashboard from "../../components/Dashboard/StudentDashboard";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
 
@@ -168,6 +166,10 @@ function Dashboard() {
 
                 <Link to={`/courses/${lesson.id}/lessons/${lesson.id}`} className="lesson-button">
                   Ver aula
+                </Link>
+
+                <Link to={`/lessons/${lesson.id}/manage`} className="lesson-button">
+                  Gerenciar →
                 </Link>
               </div>
             </article>
