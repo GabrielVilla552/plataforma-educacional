@@ -57,8 +57,19 @@ No primeiro, inicie a API:
 
 ```bash
 cd back
+export JWT_SECRET="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(32).toString("base64url"))')"
 npm run dev
 ```
+
+No PowerShell, gere uma chave e inicie a API:
+
+```powershell
+cd back
+$env:JWT_SECRET = [Convert]::ToBase64String([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
+npm run dev
+```
+
+O segredo deve ser mantido estável entre reinicializações e protegido como qualquer credencial. Em produção, a API não inicia sem `JWT_SECRET` com pelo menos 32 bytes. Em desenvolvimento, se a variável não for definida, uma chave temporária é gerada e os tokens deixam de ser válidos após reiniciar o servidor. Os tokens de acesso são JWTs HS256 com expiração de oito horas; o logout revoga o token até sua expiração.
 
 A API ficará disponível em `http://localhost:3000`.
 
